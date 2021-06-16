@@ -1,0 +1,44 @@
+{% extends 'base.html'%}
+{% import 'macros.html' as macro%}
+{% block content %}
+
+<div class="container">
+    <form>
+        <input type="text" name="movie_query" placeholder="Search for a Movie" class="form-control">
+        <input type="submit"  value="Submit" class="btn btn-default">
+    </form>
+
+</div>
+
+<!-- Popular movie -->
+<div class="container">
+    
+    <h2> Popular Movies</h2>
+    <ul>
+        {{ macro.displayMovieList(popular)}}
+    </ul>
+</div>
+
+<!-- Upcoming movie  -->
+<div class="container">
+    <h2> Upcoming Movies </h2>
+<ul>
+    {{ macro.displayMovieList(upcoming)}}
+</ul>
+</div>
+
+
+<!-- Now showing movie -->
+<div class="container">
+    <h2>Now Showing</h2>
+    <ul>
+        {{ macro.displayMovieList(now_showing)}}
+    </ul>
+</div>
+
+
+
+
+
+{% endblock%}
+
