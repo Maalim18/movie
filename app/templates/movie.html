@@ -1,0 +1,32 @@
+{% import 'macros.html' as macro%}
+{% extends 'base.html'%}
+<!-- Content block -->
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="container">
+
+    <!-- Poster background -->
+    <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <img src="{{ movie.poster }}" alt="{{ movie.title }} poster" class="img-responsive" style="height:400px; ">
+        </div>
+
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 movie-details">
+            <h3>{{ movie.title }}</h3>
+
+            <p class="overview"> {{ movie.overview }}</p>
+
+            <p class="ratings"> <b> {{ movie.vote_average }}</b> - <i>{{ movie.vote_count}} votes </i> </p>
+
+            <a class="btn btn-danger btn-lg text-center  fa fa-youtube" href="/trailer/{{movie.id}}" style="background: #bb0000;
+            color: white;"> Watch Trailer</a>
+        </div>
+    </div>
+
+    <div class="row">
+
+       
+    </div>
+
+</div>
+{% endblock %}
