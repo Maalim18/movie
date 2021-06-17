@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<title>This Genre</title>
+<div class="container">
+    <div class="row">
+
+        {% for movie in movies %}
+        {% for genre in genres %}
+        <h1>{{genre.name}}</h1>        
+        {% endfor %}
+        <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 movie-card">
+            <img src="{{ movie.poster }}" alt="{{ movie.title }} poster" class="img-responsive">
+            <p class="text-center">
+                <a href="/movie/{{movie.id}}">
+                    {{ movie.title|truncate(20)}} </a>
+            </p>
+            <p class="text-center"><strong>{{movie.release_date}}</strong></p>
+            <!-- <li>{{movie.release_date}}</li> -->
+        </div>
+
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

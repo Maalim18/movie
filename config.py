@@ -7,8 +7,10 @@ class Config:
     MOVIE_BASE_URL ='https://api.themoviedb.org/3/movie/{}?api_key={}'
     MOVIE_API_KEY = os.environ.get('MOVIE_API_KEY')
     SECRET_KEY = os.environ.get('SECRET_KEY')
+    GENRES_URL ='https://api.themoviedb.org/3/genre/movie/list?api_key={}'
+    GENRE_MOVIES_URL = 'https://api.themoviedb.org/3/discover/movie?api_key={}&with_genres={}'
+    YOUTUBE_URL = 'http://api.themoviedb.org/3/movie/{}/videos?api_key={}'
     
-   
     pass
 class ProdConfig(Config):
     '''

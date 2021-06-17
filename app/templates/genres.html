@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1 class="text-center">All Movie Genres</h1>
+<div class="container jumbotron">
+    <div class="row">
+        
+        {% for genre in genres %}
+        <ul class="col-md-4">
+            <li style="list-style-type: none; font-size: 15pt;"><a href="{{url_for('main.genre_movies',id=genre.id)}}">{{genre.name}}</a>
+            </li>
+        </ul>
+        {% endfor %}
+    </div>
+
+
+</div>
+{% endblock content %}

@@ -1,16 +1,20 @@
 import urllib.request,json
-from .models import Movie
+from .models import Movie,Genres,Trailer
 
 # Getting api key
 api_key = None
 # Getting the movie base url
 base_url = None
-
+genres_url = None
+genre_movies_url = None
+youtube_trailer_url=None
 def configure_request(app):
-    global api_key,base_url
+    global api_key,base_url, genres_url,genre_movies_url,youtube_trailer_url
     api_key = app.config['MOVIE_API_KEY']
     base_url = app.config['MOVIE_BASE_URL']
-
+    genres_url = app.config['GENRES_URL']
+    genre_movies_url = app.config['GENRE_MOVIES_URL']
+    youtube_trailer_url=app.config['YOUTUBE_URL']
 def get_movies(category):
 
     '''
@@ -51,20 +55,7 @@ def get_movie(id):
 
     return movie_object
 
-    youtube_trailer_url='http://api.themoviedb.org/3/movie/{}/videos?api_key={}'.formart(id, api_key)
-    try:
-        certifications = get_results_list(requests.get(f"{api_base}movie/{movie_id}/release_dates{api_key}"))
-        us_certification = [entry for entry in certifications if entry["iso_3166_1"] in ("US")]
-        if us_certification:
-            certification = [entry for entry in us_certification[0]["release_dates"] if entry["certification"]][0]["certification"]
-        else:
-            certification = None
-    except:
-        certification = None
-    movie_credits = get_results(requests.get(f"{api_base}movie/{movie_id}/credits{api_key}"))
-    recommendations = get_results(requests.get(f"{api_base}movie/{movie_id}/recommendations{api_key}"))
-    reviews = db.session.query(Review).filter(Review.movie_id == movie_id).order_by(Review.id.desc()).all()
-
+    
 
 def process_results(movie_list):
     '''
@@ -109,13 +100,50 @@ def search_movie(movie_name):
 
 
 def youtube_trailer(id):
-    youtube_trailer_url='http://api.themoviedb.org/3/movie/{}/videos?api_key={}'.formart(id, api_key)
-    with urllib.request.urlopen(youtube_trailer_url)as url:
-        youtube_trailer_data = url.read()
-        youtube_trailer_response = json.loads(youtube_trailer_data)
+    get_youtube_trailer_url=youtube_trailer_url.formart(id, api_key)
+    with urllib.request.urlopen(get_youtube_trailer_url)as url:
+        get_youtube_trailer_data = url.read()
+        get_youtube_trailer_response = json.loads(get_youtube_trailer_data)
 
         youtube_trailer_results = None
 
-        if youtube_trailer_response['results']:
-            youtube_trailer_list = youtube_trailer_response['results']
-            youtube_trailer_results = process_results(youtube_trailer_list)
+        if get_youtube_trailer_response['results']:
+            youtube_trailer_list = get_youtube_trailer_response['results']
+            youtube_trailer_results = process_trailer_results(youtube_trailer_list)
+
+    return youtube_trailer_results    
+
+
+
+def get_genres():
+    get_genres_url = genres_url.format(api_key)
+    with urllib.request.urlopen(get_genres_url) as url:
+        get_genres_data = url.read()
+        get_genres_response = json.loads(get_genres_data)
+        genres_results = None
+        if get_genres_response['genres']:
+            genres_results_list = get_genres_response['genres']
+            genres_results = process_genres_results(genres_results_list)
+    return genres_results
+
+
+
+def process_genres_results(genres_results_list):
+    genres_results = []
+    for genre_item in genres_results_list:
+        id = genre_item.get('id')
+        name = genre_item.get('name')
+        genre_object = Genres(id,name)
+        genres_results.append(genre_object)
+    return genres_results
+
+def get_genre_movies(id):
+    get_genre_movies_url = genre_movies_url.format(api_key,id)
+    with urllib.request.urlopen(get_genre_movies_url) as url:
+        genre_movies_data = url.read()
+        genre_movies_response = json.loads(genre_movies_data)
+        genre_movies_results = None
+        if genre_movies_response['results']:
+            genre_movies_list = genre_movies_response['results']
+            genre_movies_results = process_results(genre_movies_list)
+    return genre_movies_results            
