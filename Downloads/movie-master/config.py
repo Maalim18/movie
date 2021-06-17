@@ -9,6 +9,7 @@ class Config:
     # SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://moringa:069813@localhost/watchlist'
     UPLOADED_PHOTOS_DEST ='app/static/photos'
     SQLALCHEMY_TRACK_MODIFICATIONS=True
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://moringa:069813@localhost/movie'
 
 
      # simple mde  configurations
@@ -21,23 +22,26 @@ class Config:
     MAIL_PORT = 587
     MAIL_USE_TLS = True
     MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
-    MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
+    MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")     
 
 
 class ProdConfig(Config):
-    SQLALCHEMY_DATABASE_URI =os.environ.get("DATABASE_URL","")
+    SQLALCHEMY_DATABASE_URI =os.environ.get("DATABASE_URL")
 
-    if SQLALCHEMY_DATABASE_URI.startswith("postgres://"):
-       SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI.replace("postgres://", "postgresql://", 1)
+    # if SQLALCHEMY_DATABASE_URI.startswith("postgres://"):
+    #    SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI.replace("postgres://", "postgresql://", 1)
     
 
 
 
 class TestConfig(Config):
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://moringa:Access@localhost/MOVIE-MASTER_test'
+    pass 
+    
 
 class DevConfig(Config):
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://moringa:Access@localhost/MOVIE-MASTER'
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://moringa:069813@localhost/movie'
+    
+    
     DEBUG = True
 
 config_options = {
