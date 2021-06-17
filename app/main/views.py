@@ -1,7 +1,7 @@
 from .. models import Movie, Review,Genres
 from flask import render_template,request,redirect,url_for,abort
 from . import main
-from ..request import get_movies,get_movie,search_movie, get_genres,get_genre_movies
+from ..request import get_movies,get_movie,search_movie, get_genres,get_genre_movies, watch_trailer
 
 @main.route('/movie/<int:id>')
 def movie(id):
@@ -55,7 +55,13 @@ def genres():
     genres = get_genres()
     return render_template('genres.html',genres = genres)
 @main.route('/genres/<int:id>/movies')
+
 def genre_movies(id):
     movies = get_genre_movies(id)
     return render_template('genres_movie.html',movies = movies)
 
+@main.route('/trailer/<int:id>')
+def trailer(id):
+    trailer = watch_trailer(id)
+    trailer_url = 'https://www.youtube.com/watch?v='+trailer
+    return redirect(trailer_url)

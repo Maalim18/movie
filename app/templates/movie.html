@@ -2,6 +2,7 @@
 {% extends 'base.html'%}
 <!-- Content block -->
 {% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div class="container">
 
     <!-- Poster background -->
@@ -16,26 +17,15 @@
             <p class="overview"> {{ movie.overview }}</p>
 
             <p class="ratings"> <b> {{ movie.vote_average }}</b> - <i>{{ movie.vote_count}} votes </i> </p>
-            <a class="ratings" href="/movie/review/new/{{movie.id}}"> Write a new review</a>
-           
+
+            <a class="btn btn-danger btn-lg text-center  fa fa-youtube" href="/trailer/{{movie.id}}" style="background: #bb0000;
+            color: white;"> Watch Trailer</a>
         </div>
     </div>
 
     <div class="row">
 
-        <h1>Reviews</h1>
-        <hr>
-
-        {% if reviews %}
-            {{macro.displayReviews(reviews)}}
-
-        {% else%}
-            <h3 class="text-center">This movie has no reviews </h3>
-
-            <a class="btn btn-success btn-lg text-center" href="/movie/review/new/{{movie.id}}"> Write a new review</a>
-            <a class="btn btn-danger btn-lg text-center" href="/movie/review/new/{{movie.id}}"> Watch Trailer</a>
-        {% endif %}
-
+       
     </div>
 
 </div>
