@@ -1,7 +1,8 @@
 {% extends 'base.html'%}
 {% import 'macros.html' as macro%}
 {% block content %}
-<h1 class="page-header text-center"> Zee Moviez</h1>
+<h1 class="page-header text-center"> Movie Of The Day <a class="btn btn-info" href="{{url_for('main.genres')}}">Movie Genres</a></h1>
+
 <div class="container">
     <form>
         <input type="text" name="movie_query" placeholder="Search for a Movie" class="form-control">
@@ -12,17 +13,17 @@
 
 <!-- Popular movie -->
 
-<div class="container">
+<div class="container-fluid">
     
-    <h2> Popular Movies</h2>
+    <h2 class="text-center" style="color: Teal; font-size:30pt"> Popular Movies</h2>
     <ul>
         {{ macro.displayMovieList(popular)}}
     </ul>
 </div>
 
 <!-- Upcoming movie  -->
-<div class="container">
-    <h2> Upcoming Movies </h2>
+<div class="container-fluid">
+    <h2 class="text-center" style="color: Teal; font-size:30pt"> Upcoming Movies </h2>
 <ul>
     {{ macro.displayMovieList(upcoming)}}
 </ul>
@@ -30,8 +31,8 @@
 
 
 <!-- Now showing movie -->
-<div class="container">
-    <h2>Now Showing</h2>
+<div class="container-fluid">
+    <h2 class="text-center" style="color: Teal; font-size:30pt">Now Showing</h2>
     <ul>
         {{ macro.displayMovieList(now_showing)}}
     </ul>
